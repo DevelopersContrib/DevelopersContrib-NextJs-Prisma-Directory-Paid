@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 import { FiSearch } from "react-icons/fi";
 import { FaPlus, FaUpload } from "react-icons/fa6";
@@ -22,6 +22,8 @@ import PostType from "@/types/post.type";
 import { useSearchParams, useRouter } from "next/navigation";
 import { capitalizeFirstLetter } from "@/helpers/capitalize-first-letter";
 import Link from "next/link";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 
 type Props = {
   userId: string;
@@ -38,6 +40,8 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
   const linkId = searchParams.get("linkId");
   const category = searchParams.get("category");
 
+  const [showAdminDropdown, setShowAdminDropdown] = useState(false);
+
   const logoutHandler = () => {
     signOut();
   };
@@ -48,6 +52,10 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
 
   const bulkImport = () => {
     router.push(`/dashboard?modal=bulk-upload`);
+  };
+
+  const toggleAdminDropdown = () => {
+    setShowAdminDropdown(!showAdminDropdown);
   };
 
   return (
@@ -80,6 +88,52 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
           <FaHome className="w-5 h-5" />
           Dashboard
         </a>
+        {/* Admin with Dropdown */}
+        <div className="relative">
+          <button
+            onClick={toggleAdminDropdown}
+            className={`py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white justify-between ${
+              showAdminDropdown ? " bg-[#2c2c2c] " : ""
+            }`}
+          >
+            <div className="w-full flex gap-x-4">
+              <MdAdminPanelSettings className="w-5 h-5" />
+              Admin
+            </div>
+            <div className="">
+              <IoChevronDown
+                className={`w-4 h-4 ${showAdminDropdown ? "rotate-180" : ""}`}
+              />
+            </div>
+          </button>
+
+          {/* Dropdown Menu */}
+          <div
+            className={`w-full bg-[#2c2c2c] flex-col transition duration-300 ease-in-out ${
+              showAdminDropdown ? "flex" : "hidden"
+            }`}
+          >
+            <a
+              href="/admin/add-category"
+              className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
+            >
+              <span className="block pl-9">Add New Category</span>
+            </a>
+            <a
+              href="/admin/manage-category"
+              className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
+            >
+              <span className="block pl-9">Manage Category</span>
+            </a>
+            <a
+              href="/admin/payments"
+              className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
+            >
+              <span className="block pl-9">Payment Transaction</span>
+            </a>
+          </div>
+        </div>
+
         <a
           href="/listing/create"
           className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white"
