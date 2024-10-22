@@ -12,13 +12,25 @@ const Main = () => {
           <span className="mr-2">
             <FaRegFileAlt />
           </span>
-          {`Add New Category`}
+          {`Add New Domain`}
         </h2>
       </div>
       <div>
         <div className="w-1/2 flex flex-col gap-y-4">
           <div className="gap-y-2">
-            <Label className="label">Name</Label>
+            <Label className="label">URL Logo</Label>
+            <Input type="text" />
+          </div>
+          <div className="gap-y-2">
+            <Label className="label">Title</Label>
+            <Input type="text" />
+          </div>
+          <div className="gap-y-2">
+            <Label className="label">Description</Label>
+            <Input type="text" />
+          </div>
+          <div className="gap-y-2">
+            <Label className="label">Price</Label>
             <Input type="text" />
           </div>
           <div className="mt-4">

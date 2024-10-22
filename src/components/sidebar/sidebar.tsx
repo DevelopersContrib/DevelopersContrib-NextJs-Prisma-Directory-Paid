@@ -114,6 +114,12 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
             }`}
           >
             <a
+              href="/admin/domain"
+              className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
+            >
+              <span className="block pl-9">Add New Domain</span>
+            </a>
+            <a
               href="/admin/add-category"
               className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
             >
