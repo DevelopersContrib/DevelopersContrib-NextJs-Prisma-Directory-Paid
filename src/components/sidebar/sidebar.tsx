@@ -31,9 +31,11 @@ type Props = {
   recents: LinkType[];
   domain?: string;
   logo: string;
+  isAdmin: boolean;
 };
 
-const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
+const Sidebar = ({ categories, recents, userId, domain, logo, isAdmin }: Props) => {
+  isAdmin = true;
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId");
@@ -89,7 +91,9 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
           Dashboard
         </a>
         {/* Admin with Dropdown */}
-        <div className="relative">
+        {
+        isAdmin?(
+          <div className="relative">
           <button
             onClick={toggleAdminDropdown}
             className={`py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white justify-between ${
@@ -117,7 +121,7 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
               href="/admin/domain"
               className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white text-sm"
             >
-              <span className="block pl-9">Add New Domain</span>
+              <span className="block pl-9">Domain Settings</span>
             </a>
             <a
               href="/admin/add-category"
@@ -139,7 +143,7 @@ const Sidebar = ({ categories, recents, userId, domain, logo }: Props) => {
             </a>
           </div>
         </div>
-
+        ):null}
         <a
           href="/listing/create"
           className="py-3 px-5 h-[40px] w-full flex items-center gap-x-4 cursor-pointer opacity-60 hover:opacity-100 hover:bg-white/5 transition text-white"

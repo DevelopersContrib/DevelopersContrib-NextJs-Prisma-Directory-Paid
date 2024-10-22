@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prismadb from '@/lib/prismaDb';
 import { compare } from 'bcrypt';
+import { User } from '@prisma/client';
 
 export const authOptions: NextAuthOptions = {
 	providers: [
@@ -40,10 +41,12 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async jwt({ token, user }) {
+			const typedUser = user as User;
 			if (user) {
 				return {
 					...token,
-					userId: user.id,
+					userId: typedUser.id,
+					isAdmin: typedUser.is_admin,
 				};
 			}
 
@@ -55,6 +58,7 @@ export const authOptions: NextAuthOptions = {
 				user: {
 					...session.user,
 					userId: token.userId,
+					isAdmin: token.isAdmin, 
 				},
 			};
 		},

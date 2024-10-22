@@ -78,6 +78,7 @@ const App: React.FC<Checkout> = async ({ params }) => {
     <>
       <main className="flex">
         <Sidebar
+          isAdmin={session.user.isAdmin}
           recents={recents}
           categories={categories}
           userId={session.user.userId}

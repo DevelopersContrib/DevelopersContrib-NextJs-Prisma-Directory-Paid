@@ -12,7 +12,7 @@ const Main = () => {
           <span className="mr-2">
             <FaRegFileAlt />
           </span>
-          {`Add New Domain`}
+          {`Domain`}
         </h2>
       </div>
       <div>

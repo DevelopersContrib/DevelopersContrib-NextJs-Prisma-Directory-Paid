@@ -42,6 +42,7 @@ const page = async () => {
   return (
     <main className="flex">
       <Sidebar
+        isAdmin={session.user.isAdmin}
         recents={recents}
         categories={categories}
         userId={session.user.userId}

@@ -3,6 +3,7 @@ type SessionType = {
 		name: string;
 		email: string;
 		userId: string;
+		isAdmin: boolean;
 	};
 } | null;
 
