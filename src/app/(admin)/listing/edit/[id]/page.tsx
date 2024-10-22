@@ -82,17 +82,16 @@ const page = async ({ params }: { params: { id: string} }) => {
     <>
       <main className="flex">
         <Sidebar
+          isAdmin={session.user.isAdmin}
           recents={recents}
           categories={categories}
           userId={session.user.userId}
           domain={domain}
           logo={c.data.logo}
         />
-
         <EditListing linkData={linkData} categories={categories} userId={session.user.userId} />
       </main>
     </>
   );
 };
-
 export default page;
