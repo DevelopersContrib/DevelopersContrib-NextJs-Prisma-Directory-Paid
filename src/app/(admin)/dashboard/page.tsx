@@ -90,6 +90,7 @@ export default async function Dashboard({
           recents={recents}
           categories={categories}
           userId={session.user.userId}
+          isAdmin={session.user.isAdmin}
           domain={domain}
           logo={c.data.logo}
         />

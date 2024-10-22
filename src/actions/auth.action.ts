@@ -14,6 +14,8 @@ export const authRegisterAction = async ({
 	domain,
 }: IRegister) => {
 	try {
+		const count = await prismadb.user.count();
+		
 		const emailAlreadyExists = await prismadb.user.findFirst({
 			where: {
 				email,
@@ -32,7 +34,8 @@ export const authRegisterAction = async ({
 				name,
 				email,
 				password: await hash(password, 10),
-				domain
+				domain,
+				is_admin:count===0
 			},
 		});
 
