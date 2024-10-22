@@ -89,7 +89,6 @@ const page = async ({ params }: { params: { id: string} }) => {
           domain={domain}
           logo={c.data.logo}
         />
-
         <EditListing linkData={linkData} categories={categories} userId={session.user.userId} />
       </main>
     </>
