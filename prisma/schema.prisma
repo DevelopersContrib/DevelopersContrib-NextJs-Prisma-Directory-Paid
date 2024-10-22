@@ -16,6 +16,7 @@ model User {
   domain String     @default("")
   receive_email Boolean @default(false)
   receive_newsletter Boolean @default(false)
+  is_admin Boolean @default(false)
   links    Link[]
   payment    Payment[]
   votes_up    LinkVotesUp[]
