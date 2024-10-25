@@ -8,7 +8,9 @@ import { redirect } from "next/navigation";
 import { getDomain, getData } from "@/lib/data";
 import CategoryType from "@/types/category.type";
 import { LinkType } from "@/types/link.type";
+import {getSettings} from "@/actions/domain.action";
 import Main from "./Main";
+import {ISettings} from "@/interfaces/domain.interface";
 
 const page = async () => {
   const session: SessionType = await getServerSession(authOptions);
@@ -39,6 +41,16 @@ const page = async () => {
       createdAt: "desc",
     },
   });
+
+  const dataSettings = await getSettings();
+  const settings = {
+    id:dataSettings?.id,
+    title:dataSettings?.title,
+    logo:dataSettings?.logo,
+    description:dataSettings?.description,
+    price:dataSettings?.price
+  } as ISettings;
+
   return (
     <main className="flex">
       <Sidebar
@@ -49,7 +61,7 @@ const page = async () => {
         domain={domain}
         logo={c.data.logo}
       />
-      <Main />
+      <Main settings={settings} />
     </main>
   );
 };

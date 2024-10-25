@@ -35,7 +35,7 @@ type Props = {
 };
 
 const Sidebar = ({ categories, recents, userId, domain, logo, isAdmin }: Props) => {
-  isAdmin = true;
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("categoryId");
