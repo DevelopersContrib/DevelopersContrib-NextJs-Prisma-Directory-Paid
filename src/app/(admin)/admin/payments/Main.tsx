@@ -1,8 +1,13 @@
 import React from 'react'
 import { FaRegFileAlt } from 'react-icons/fa'
 import DataTableListing from './DataTableListing'
+import { PaymentType } from "@/types/payment.type";
 
-const Main = () => {
+type Props = {
+  recents: PaymentType[];
+};
+
+const Main = ({recents}: Props) => {
   return (
     <div className="p-[50px] flex flex-col gap-y-8 w-full">
       <div>
@@ -14,7 +19,7 @@ const Main = () => {
         </h2>
       </div>
       <div>
-      <DataTableListing />
+      <DataTableListing recents={recents}/>
       </div>
     </div>
   )

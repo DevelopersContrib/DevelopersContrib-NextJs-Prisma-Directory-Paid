@@ -1,5 +1,5 @@
 import { PackagesProps } from "@/types/packages";
-import  PaymentType  from "@/types/payment.type";
+import  { PaymentType }  from "@/types/payment.type";
 
 export type StripePackage = {
     id: string;

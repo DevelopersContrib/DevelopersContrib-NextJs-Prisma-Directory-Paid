@@ -1,4 +1,4 @@
-type PaymentType = {
+export type  PaymentType = {
 	id: string;
 	amount: number;
 	payment_type: string;
@@ -13,4 +13,5 @@ type PaymentType = {
 	updatedAt: Date;
 };
 
-export default PaymentType;
+
+ 
