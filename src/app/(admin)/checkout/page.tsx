@@ -14,7 +14,6 @@ import SessionType from "@/types/session.type";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { getDomain, getData } from "@/lib/data";
-import PaymentType from "@/types/payment.type";
 import CategoryType from "@/types/category.type";
 import StripeWrapper from "@/components/checkout/StripeWrapper";
 
