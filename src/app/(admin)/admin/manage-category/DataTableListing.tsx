@@ -3,114 +3,83 @@ import React, { useMemo, useState } from "react";
 import {
   ColumnDef,
   useReactTable,
+  SortingState, 
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   flexRender,
   PaginationState,
+  VisibilityState
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Image from "next/image";
+import CategoryType from "@/types/category.type";
 
-type ListingType = {
-  id: string;
-  logo: string;
-  title: string;
-  description: string;
-  price: string;
+type Props = {
+  categories: CategoryType[];
 };
 
-const staticData: ListingType[] = [
-  {
-    id: "1",
-    logo: "https://manage.vnoc.com/uploads/directory/ad295946-b663-4d50-a276-840e1e6c71e2.jpg?w=64&q=75",
-    title: "Service A",
-    description: "Description for Service A",
-    price: "$100",
-  },
-  {
-    id: "2",
-    logo: "https://manage.vnoc.com/uploads/directory/ad295946-b663-4d50-a276-840e1e6c71e2.jpg?w=64&q=75",
-    title: "Service B",
-    description: "Description for Service B",
-    price: "$200",
-  },
-  {
-    id: "3",
-    logo: "https://manage.vnoc.com/uploads/directory/ad295946-b663-4d50-a276-840e1e6c71e2.jpg?w=64&q=75",
-    title: "Service C",
-    description: "Description for Service C",
-    price: "$300",
-  },
-];
-
-const DataTableListing = () => {
+const DataTableListing = ({ categories }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  // Filter data based on the search term
-  const filteredData = staticData.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const columns = useMemo<ColumnDef<(typeof categories)[0]>[]>(() => [
+    {
+      accessorKey: "category_name",
+      header: "Category Name",
+      cell: ({ row }) => <div>{row.getValue("category_name")}</div>,
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <div className="flex space-x-2">
+          <Button asChild size="sm">
+            <a href={`listing/edit/${row.original.category_id}`}>Edit</a>
+          </Button>
+          <Button size="sm" variant="destructive" color="white">
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+  ], []);
 
-  const columns = useMemo<ColumnDef<ListingType>[]>(
-    () => [
-      {
-        accessorKey: "logo",
-        header: "Logo",
-        cell: ({ row }) => (
-          <Image src={row.getValue("logo")} alt="Logo" width={50} height={50} />
-        ),
-      },
-      {
-        accessorKey: "title",
-        header: "Title",
-        cell: ({ row }) => <div>{row.getValue("title")}</div>,
-      },
-      {
-        accessorKey: "description",
-        header: "Description",
-        cell: ({ row }) => <div>{row.getValue("description")}</div>,
-      },
-      {
-        accessorKey: "price",
-        header: "Price",
-        cell: ({ row }) => <div>{row.getValue("price")}</div>,
-      },
-      {
-        id: "actions",
-        header: "Actions",
-        cell: ({ row }) => (
-          <div className="flex space-x-2">
-            <Button asChild size="sm">
-              <a href={`listing/edit/${row.original.id}`}>Edit</a>
-            </Button>
-            <Button size="sm" variant="destructive" color="white">
-              Delete
-            </Button>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
+  const filteredData = useMemo(() => {
+   
+    if (!globalFilter) return categories;
+    const lowerCaseFilter = globalFilter.toLowerCase();
+    return categories.filter((item) =>
+      item.category_name?.toLowerCase().includes(lowerCaseFilter)
+    );
+  }, [globalFilter, categories]);
+  
+
+ 
 
   const table = useReactTable({
     data: filteredData,
     columns,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
+      sorting,
+      columnVisibility,
       pagination,
     },
     onPaginationChange: setPagination,
-    manualPagination: false, // Automatically handle pagination
-    pageCount: Math.ceil(filteredData.length / pagination.pageSize),
   });
+
 
   return (
     <div className="w-full">
