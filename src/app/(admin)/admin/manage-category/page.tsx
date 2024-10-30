@@ -49,7 +49,7 @@ const page = async () => {
         domain={domain}
         logo={c.data.logo}
       />
-      <Main />
+      <Main categories={categories}/>
     </main>
   );
 };

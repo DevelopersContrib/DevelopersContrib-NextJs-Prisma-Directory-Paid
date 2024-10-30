@@ -1,8 +1,14 @@
 import React from "react";
 import { FaRegFileAlt } from "react-icons/fa";
 import DataTableListing from "./DataTableListing";
+import CategoryType from "@/types/category.type";
 
-const Main = () => {
+type Props = {
+  categories: CategoryType[];
+};
+
+
+const Main = ({categories}: Props) => {
   return (
     <div className="p-[50px] flex flex-col gap-y-8 w-full">
       <div>
@@ -14,7 +20,7 @@ const Main = () => {
         </h2>
       </div>
       <div>
-      <DataTableListing />
+      <DataTableListing categories={categories}/>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import {
   ColumnDef,
   useReactTable,
-  SortingState,
+  SortingState, 
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -53,7 +53,7 @@ const DataTableListing = ({ recents }: Props) => {
   ], []);
 
   const filteredData = useMemo(() => {
-    if (!recents) return []; // Return an empty array if recents is undefined
+   
     if (!globalFilter) return recents;
     const lowerCaseFilter = globalFilter.toLowerCase();
     return recents.filter((item) =>
@@ -90,7 +90,7 @@ const DataTableListing = ({ recents }: Props) => {
               <span className="mr-4">
                 <FaSearch />
               </span>
-              No listing found.
+              No transaction found.
             </div>
           </div>
         ) : (
