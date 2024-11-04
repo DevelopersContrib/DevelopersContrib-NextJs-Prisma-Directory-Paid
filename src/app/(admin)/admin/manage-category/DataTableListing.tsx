@@ -12,6 +12,7 @@ import {
   VisibilityState
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import { deleteCategory } from "@/actions/category.action";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import CategoryType from "@/types/category.type";
@@ -30,6 +31,24 @@ const DataTableListing = ({ categories }: Props) => {
     pageSize: 10,
   });
 
+  const [data, setData] = useState(categories); // Use local state for categories
+
+  const handleDelete = async (category_id: string) => {
+    const confirmation = window.confirm("Are you sure you want to delete this category?");
+    if (!confirmation) return;
+
+    try {
+      const response = await deleteCategory(category_id);
+      if (response.message === "Category deleted successfully") {
+        setData((prevData) => prevData.filter((category) => category.category_id !== category_id));
+      } else {
+        alert("Failed to delete the category");
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
+  };
+
   const columns = useMemo<ColumnDef<(typeof categories)[0]>[]>(() => [
     {
       accessorKey: "category_name",
@@ -44,7 +63,12 @@ const DataTableListing = ({ categories }: Props) => {
           <Button asChild size="sm">
             <a href={`listing/edit/${row.original.category_id}`}>Edit</a>
           </Button>
-          <Button size="sm" variant="destructive" color="white">
+          <Button
+            size="sm"
+            variant="destructive"
+            color="white"
+            onClick={() => handleDelete(row.original.category_id)}
+          >
             Delete
           </Button>
         </div>
