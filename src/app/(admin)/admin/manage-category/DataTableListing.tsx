@@ -41,6 +41,7 @@ const DataTableListing = ({ categories }: Props) => {
       const response = await deleteCategory(category_id);
       if (response.message === "Category deleted successfully") {
         setData((prevData) => prevData.filter((category) => category.category_id !== category_id));
+        window.location.reload(); // Refresh the page after deletion
       } else {
         alert("Failed to delete the category");
       }
@@ -60,9 +61,7 @@ const DataTableListing = ({ categories }: Props) => {
       header: "Actions",
       cell: ({ row }) => (
         <div className="flex space-x-2">
-          <Button asChild size="sm">
-            <a href={`listing/edit/${row.original.category_id}`}>Edit</a>
-          </Button>
+          
           <Button
             size="sm"
             variant="destructive"
